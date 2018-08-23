@@ -1,6 +1,6 @@
 package com.github.danilopaiva.api
 
-import com.github.danilopaiva.representation.CustomerAccountRepresentation
+import com.github.danilopaiva.response.CustomerAccountResponse
 import com.github.danilopaiva.request.CustomerAccountRequest
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -23,5 +23,5 @@ interface CustomerAccountApi {
     @ResponseStatus(CREATED)
     @ResponseBody
     @PostMapping(consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
-    fun create(@RequestBody @Valid request: CustomerAccountRequest): CustomerAccountRepresentation
+    fun create(@RequestBody @Valid request: CustomerAccountRequest): CustomerAccountResponse
 }

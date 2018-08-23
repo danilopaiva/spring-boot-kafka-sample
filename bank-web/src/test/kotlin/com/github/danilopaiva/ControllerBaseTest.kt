@@ -16,8 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.danilopaiva.config.ApplicationTestConfig
 import com.github.danilopaiva.extension.jsonToObject
 import com.github.danilopaiva.extension.objectToJson
-import com.github.danilopaiva.representation.CustomerAccountRepresentation
 import com.github.danilopaiva.request.CustomerAccountRequest
+import com.github.danilopaiva.request.DepositRequest
+import com.github.danilopaiva.response.CustomerAccountResponse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -117,7 +118,7 @@ abstract class ControllerBaseTest {
     }
 
 
-    fun crateAccountCustomer(request: CustomerAccountRequest = getCustomerAccountRequest()) =
+    fun createAccountCustomer(request: CustomerAccountRequest = getCustomerAccountRequest()) =
         this.mockMvc.perform(
             post("/accounts")
                 .content(request.objectToJson())
@@ -126,15 +127,21 @@ abstract class ControllerBaseTest {
             .andExpect(status().isCreated)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andReturn()
-            .response.contentAsString.jsonToObject(CustomerAccountRepresentation::class.java).accountId
+            .response.contentAsString.jsonToObject(CustomerAccountResponse::class.java).accountId
 
     fun getCustomerAccountRequest() =
         CustomerAccountRequest(
-            name = "Danilo Paiva",
             document = CustomerAccountRequest.DocumentRequest(
-                id = "11122233344",
+                name = "Danilo Paiva",
+                number = "11122233344",
                 type = "CPF"
             )
 
+        )
+
+    fun createADeposit(accountId: String, amount: Double = 10.0): DepositRequest =
+        DepositRequest(
+            accountId = accountId,
+            amount = amount
         )
 }

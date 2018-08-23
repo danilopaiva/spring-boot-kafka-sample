@@ -1,20 +1,21 @@
-package com.github.danilopaiva.representation
+package com.github.danilopaiva.response
 
 import java.time.LocalDateTime
 
 /**
  * Customer Account Representation
  */
-data class CustomerAccountRepresentation(
+data class CustomerAccountResponse(
+
     /**
      * Customer's Account Id
      */
     val accountId: String,
 
     /**
-     * Customer's Name
+     * Valor in account
      */
-    val name: String?,
+    val amount: Double?,
 
     /**
      * Customer's Document
@@ -24,7 +25,7 @@ data class CustomerAccountRepresentation(
     /**
      * Date of registration
      */
-    val createAt: LocalDateTime,
+    val createdAt: LocalDateTime,
 
     /**
      * Customer situation
@@ -35,14 +36,20 @@ data class CustomerAccountRepresentation(
      * Document Representation
      */
     data class DocumentRepresentation(
+
+        /**
+         * Customer's Name
+         */
+        val name: String?,
+
         /**
          * Document Type
          */
         val type: String?,
 
         /**
-         * Document Id
+         * Document number Id
          */
-        val id: String?
+        val number: String?
     )
 }

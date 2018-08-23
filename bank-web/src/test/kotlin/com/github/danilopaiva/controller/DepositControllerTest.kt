@@ -3,7 +3,7 @@ package com.github.danilopaiva.controller
 import com.github.danilopaiva.ControllerBaseTest
 import com.github.danilopaiva.extension.jsonToObject
 import com.github.danilopaiva.extension.objectToJson
-import com.github.danilopaiva.response.CustomerAccountResponse
+import com.github.danilopaiva.response.DepositResponse
 import org.junit.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -13,27 +13,25 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-class CustomerAccountControllerTest : ControllerBaseTest() {
+class DepositControllerTest : ControllerBaseTest() {
 
     @Test
-    fun `should create a customer account`() {
-        val customerAccount = getCustomerAccountRequest()
+    fun `should deposit an amount`() {
+        val accountId = createAccountCustomer()
+        val deposit = createADeposit(accountId)
 
         this.mockMvc.perform(
-            post("/accounts")
-                .content(customerAccount.objectToJson())
+            post("/deposits")
+                .content(deposit.objectToJson())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
-            .andExpect(status().isCreated)
+            .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andExpect {
-                it.response.contentAsString.jsonToObject(CustomerAccountResponse::class.java).run {
-                    assertNotNull(accountId)
-                    assertNotNull(createdAt)
+                it.response.contentAsString.jsonToObject(DepositResponse::class.java).run {
+                    assertNotNull(transactionId)
                     assertNotNull(status)
-                    assertEquals(customerAccount.document?.name, document.name)
-                    assertEquals(customerAccount.document?.number, document.number)
-                    assertEquals(customerAccount.document?.type, document.type)
+                    assertEquals("PROCESSING", status)
                 }
             }
     }

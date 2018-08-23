@@ -21,6 +21,8 @@
     <modules>
         <module>bank-api</module>
         <module>bank-web</module>
+        <module>bank-command</module>
+        <module>bank-domain</module>
     </modules>
 
     <properties>
@@ -79,6 +81,18 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>bank-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>bank-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>bank-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
