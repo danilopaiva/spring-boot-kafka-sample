@@ -1,22 +1,25 @@
 package com.github.danilopaiva.controller
 
 import com.github.danilopaiva.api.DepositApi
+import com.github.danilopaiva.command.handler.AccountCommandHandler
+import com.github.danilopaiva.helper.toCommand
+import com.github.danilopaiva.helper.toResponse
 import com.github.danilopaiva.request.DepositRequest
 import com.github.danilopaiva.response.DepositResponse
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import java.util.*
 import javax.validation.Valid
 
 /**
  * Deposit controller
  */
 @RestController
-class DepositController : DepositApi {
+class DepositController constructor(
+    private val accountCommandHandler: AccountCommandHandler
+) : DepositApi {
 
-    override fun create(@RequestBody @Valid request: DepositRequest): DepositResponse =
-        DepositResponse(
-            transactionId = UUID.randomUUID().toString(),
-            status = "PROCESSING"
-        )
+    override fun create(@RequestBody @Valid request: DepositRequest): DepositResponse {
+        val command = request.toCommand()
+        return accountCommandHandler.handler(command).toResponse()
+    }
 }

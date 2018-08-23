@@ -11,5 +11,13 @@
 
     <artifactId>bank-domain</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.nhaarman</groupId>
+            <artifactId>mockito-kotlin-kt1.1</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 
 </project>

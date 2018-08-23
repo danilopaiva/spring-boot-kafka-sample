@@ -1,7 +1,7 @@
 package com.github.danilopaiva.controller
 
 import com.github.danilopaiva.api.CustomerAccountApi
-import com.github.danilopaiva.command.AccountCommandHandler
+import com.github.danilopaiva.command.handler.AccountCommandHandler
 import com.github.danilopaiva.helper.toCommand
 import com.github.danilopaiva.helper.toResponse
 import com.github.danilopaiva.request.CustomerAccountRequest

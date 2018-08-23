@@ -1,6 +1,7 @@
 package com.github.danilopaiva.controller
 
-import com.github.danilopaiva.ControllerBaseTest
+import com.github.danilopaiva.config.ControllerBaseTest
+import com.github.danilopaiva.domain.Deposit
 import com.github.danilopaiva.extension.jsonToObject
 import com.github.danilopaiva.extension.objectToJson
 import com.github.danilopaiva.response.DepositResponse
@@ -16,7 +17,7 @@ import kotlin.test.assertNotNull
 class DepositControllerTest : ControllerBaseTest() {
 
     @Test
-    fun `should deposit an amount`() {
+    fun `should do a deposit`() {
         val accountId = createAccountCustomer()
         val deposit = createADeposit(accountId)
 
@@ -31,7 +32,8 @@ class DepositControllerTest : ControllerBaseTest() {
                 it.response.contentAsString.jsonToObject(DepositResponse::class.java).run {
                     assertNotNull(transactionId)
                     assertNotNull(status)
-                    assertEquals("PROCESSING", status)
+                    assertNotNull(createdAt)
+                    assertEquals(Deposit.Status.COMPLETED.name, status)
                 }
             }
     }

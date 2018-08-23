@@ -15,7 +15,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.3.RELEASE</version>
-        <relativePath/>
     </parent>
 
     <modules>
@@ -31,6 +30,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <kotlin.version>1.2.41</kotlin.version>
+
+        <!--DB-->
+        <hikari.cp.version>2.6.1</hikari.cp.version>
+        <postgresql.version>42.1.1</postgresql.version>
 
         <!--LOG-->
         <jackson.version>2.9.5</jackson.version>
@@ -68,10 +71,17 @@
             <version>${log4j.version}</version>
         </dependency>
 
+        <!--TESTS-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -94,6 +104,32 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>bank-domain</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <!--DB-->
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikari.cp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+
+            <!--TESTS-->
+            <dependency>
+                <groupId>com.nhaarman</groupId>
+                <artifactId>mockito-kotlin-kt1.1</artifactId>
+                <version>1.5.0</version>
             </dependency>
 
             <!--REST DOCS-->
@@ -233,7 +269,9 @@
                             <configuration>
                                 <sourceDirectories>
                                     <sourceDirectory>${project.basedir}/../bank-api/src/main/kotlin</sourceDirectory>
-                                    <sourceDirectory>${project.basedir}/src/main/kotlin/com/github/danilopaiva/controller</sourceDirectory>
+                                    <sourceDirectory>
+                                        ${project.basedir}/src/main/kotlin/com/github/danilopaiva/controller
+                                    </sourceDirectory>
                                 </sourceDirectories>
                             </configuration>
                         </execution>

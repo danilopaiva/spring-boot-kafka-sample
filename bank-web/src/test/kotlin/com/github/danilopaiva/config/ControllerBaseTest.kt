@@ -1,4 +1,4 @@
-package com.github.danilopaiva
+package com.github.danilopaiva.config
 
 import capital.scalable.restdocs.AutoDocumentation
 import capital.scalable.restdocs.AutoDocumentation.description
@@ -13,7 +13,6 @@ import capital.scalable.restdocs.response.ResponseModifyingPreprocessors.limitJs
 import capital.scalable.restdocs.response.ResponseModifyingPreprocessors.replaceBinaryContent
 import capital.scalable.restdocs.section.SectionSnippet
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.danilopaiva.config.ApplicationTestConfig
 import com.github.danilopaiva.extension.jsonToObject
 import com.github.danilopaiva.extension.objectToJson
 import com.github.danilopaiva.request.CustomerAccountRequest

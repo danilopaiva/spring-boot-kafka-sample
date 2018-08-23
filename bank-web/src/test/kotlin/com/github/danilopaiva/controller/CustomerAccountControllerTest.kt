@@ -1,6 +1,7 @@
 package com.github.danilopaiva.controller
 
-import com.github.danilopaiva.ControllerBaseTest
+import com.github.danilopaiva.config.ControllerBaseTest
+import com.github.danilopaiva.domain.Account
 import com.github.danilopaiva.extension.jsonToObject
 import com.github.danilopaiva.extension.objectToJson
 import com.github.danilopaiva.response.CustomerAccountResponse
@@ -31,9 +32,12 @@ class CustomerAccountControllerTest : ControllerBaseTest() {
                     assertNotNull(accountId)
                     assertNotNull(createdAt)
                     assertNotNull(status)
+                    assertNotNull(createdAt)
                     assertEquals(customerAccount.document?.name, document.name)
                     assertEquals(customerAccount.document?.number, document.number)
                     assertEquals(customerAccount.document?.type, document.type)
+                    assertEquals(Account.Status.ACTIVE.name, status)
+                    assertEquals(0.0, amount)
                 }
             }
     }

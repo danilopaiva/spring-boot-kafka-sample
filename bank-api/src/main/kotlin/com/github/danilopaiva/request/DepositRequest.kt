@@ -13,5 +13,5 @@ data class DepositRequest(
     /**
      * Amount to deposit
      */
-    val amount: Double
+    val amount: Double?
 )

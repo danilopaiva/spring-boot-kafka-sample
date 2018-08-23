@@ -1,20 +1,32 @@
 package com.github.danilopaiva.domain
 
+import com.github.danilopaiva.domain.repository.AccountRepository
 import java.time.LocalDateTime
 import java.util.*
 
 class Account(
     val id: Account.Id,
-    val amount: Amount = Amount.zero(),
+    var balance: Balance = Balance.zero(),
     val document: Document,
     val status: Status = Status.ACTIVE,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val deposits: ArrayList<Deposit> = arrayListOf()
 ) {
+    fun create(repository: AccountRepository) {
+        repository.save(this)
+    }
 
-    data class Amount(val value: Double) {
+    fun deposit(deposit: Deposit, repository: AccountRepository) {
+        balance = Balance(balance.value + deposit.amount.value)
+        deposit.completedAt = LocalDateTime.now()
+        deposit.status = Deposit.Status.COMPLETED
+        repository.deposit(this, deposit)
+    }
+
+    data class Balance(val value: Double) {
         companion object {
-            fun zero(): Amount =
-                Amount(0.0)
+            fun zero(): Balance =
+                Balance(0.0)
 
         }
     }
