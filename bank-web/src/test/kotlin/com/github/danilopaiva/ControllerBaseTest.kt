@@ -1,10 +1,5 @@
-package br.com.leeches
+package com.github.danilopaiva
 
-import br.com.leeches.config.ApplicationTestConfig
-import br.com.leeches.extension.jsonToObject
-import br.com.leeches.extension.objectToJson
-import br.com.leeches.representation.LeechRepresentation
-import br.com.leeches.request.LeechRequest
 import capital.scalable.restdocs.AutoDocumentation
 import capital.scalable.restdocs.AutoDocumentation.description
 import capital.scalable.restdocs.AutoDocumentation.methodAndPath
@@ -18,6 +13,11 @@ import capital.scalable.restdocs.response.ResponseModifyingPreprocessors.limitJs
 import capital.scalable.restdocs.response.ResponseModifyingPreprocessors.replaceBinaryContent
 import capital.scalable.restdocs.section.SectionSnippet
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.danilopaiva.config.ApplicationTestConfig
+import com.github.danilopaiva.extension.jsonToObject
+import com.github.danilopaiva.extension.objectToJson
+import com.github.danilopaiva.representation.CustomerAccountRepresentation
+import com.github.danilopaiva.request.CustomerAccountRequest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -67,66 +67,74 @@ abstract class ControllerBaseTest {
     @Throws(Exception::class)
     fun setUp() {
         this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(this.context)
-                .alwaysDo<DefaultMockMvcBuilder>(prepareJackson(objectMapper))
-                .alwaysDo<DefaultMockMvcBuilder>(commonDocumentation())
-                .apply<DefaultMockMvcBuilder>(documentationConfiguration(restDocumentation)
-                        .uris()
-                        .and().snippets()
-                        .withDefaults(CliDocumentation.curlRequest(),
-                                httpRequest(),
-                                httpResponse(),
-                                requestFields(),
-                                responseFields(),
-                                pathParameters(),
-                                requestParameters(),
-                                description(),
-                                methodAndPath(),
-                                buildSection()
-                        )
-                )
-                .build()
+            .webAppContextSetup(this.context)
+            .alwaysDo<DefaultMockMvcBuilder>(prepareJackson(objectMapper))
+            .alwaysDo<DefaultMockMvcBuilder>(commonDocumentation())
+            .apply<DefaultMockMvcBuilder>(
+                documentationConfiguration(restDocumentation)
+                    .uris()
+                    .and().snippets()
+                    .withDefaults(
+                        CliDocumentation.curlRequest(),
+                        httpRequest(),
+                        httpResponse(),
+                        requestFields(),
+                        responseFields(),
+                        pathParameters(),
+                        requestParameters(),
+                        description(),
+                        methodAndPath(),
+                        buildSection()
+                    )
+            )
+            .build()
     }
 
     private fun commonDocumentation(): RestDocumentationResultHandler {
-        return document("{class-name}/{method-name}",
-                preprocessRequest(),
-                preprocessResponse(
-                        replaceBinaryContent(),
-                        limitJsonArrayLength(objectMapper),
-                        prettyPrint()
-                )
+        return document(
+            "{class-name}/{method-name}",
+            preprocessRequest(),
+            preprocessResponse(
+                replaceBinaryContent(),
+                limitJsonArrayLength(objectMapper),
+                prettyPrint()
+            )
         )
     }
 
     private fun buildSection(): SectionSnippet {
         return AutoDocumentation.sectionBuilder()
-                .snippetNames(
-                        SnippetRegistry.PATH_PARAMETERS,
-                        SnippetRegistry.HTTP_REQUEST,
-                        SnippetRegistry.REQUEST_PARAMETERS,
-                        SnippetRegistry.REQUEST_FIELDS,
-                        SnippetRegistry.HTTP_RESPONSE,
-                        SnippetRegistry.RESPONSE_FIELDS
-                )
-                .skipEmpty(true)
-                .build()
+            .snippetNames(
+                SnippetRegistry.PATH_PARAMETERS,
+                SnippetRegistry.HTTP_REQUEST,
+                SnippetRegistry.REQUEST_PARAMETERS,
+                SnippetRegistry.REQUEST_FIELDS,
+                SnippetRegistry.HTTP_RESPONSE,
+                SnippetRegistry.RESPONSE_FIELDS
+            )
+            .skipEmpty(true)
+            .build()
     }
 
 
-    fun createLeech(leech: LeechRequest = getLeechRequest()) =
-            this.mockMvc.perform(post("/leeches")
-                    .content(leech.objectToJson())
-                    .contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(status().isCreated)
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andReturn()
-                    .response.contentAsString.jsonToObject(LeechRepresentation::class.java).id
+    fun crateAccountCustomer(request: CustomerAccountRequest = getCustomerAccountRequest()) =
+        this.mockMvc.perform(
+            post("/accounts")
+                .content(request.objectToJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+            .andExpect(status().isCreated)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andReturn()
+            .response.contentAsString.jsonToObject(CustomerAccountRepresentation::class.java).accountId
 
-    fun getLeechRequest() =
-            LeechRequest(
-                    name = "Luiz Inacio Lula da Silva",
-                    description = "ex presidente",
-                    stolenMoney = 1000000.00
+    fun getCustomerAccountRequest() =
+        CustomerAccountRequest(
+            name = "Danilo Paiva",
+            document = CustomerAccountRequest.DocumentRequest(
+                id = "11122233344",
+                type = "CPF"
             )
+
+        )
 }

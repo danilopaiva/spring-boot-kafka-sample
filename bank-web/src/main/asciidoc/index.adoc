@@ -4,10 +4,8 @@
 :toc: left
 :toclevels: 5
 
-include::introduction.adoc[]
+//include::introduction.adoc[]
 
-== Leech
+== Account
 
-include::{snippets}/leeches-controller-test/create leech success/auto-section.adoc[]
-
-include::{snippets}/leeches-controller-test/find a leech success/auto-section.adoc[]
+include::{snippets}/customer-account-controller-test/should create a customer account/auto-section.adoc[]

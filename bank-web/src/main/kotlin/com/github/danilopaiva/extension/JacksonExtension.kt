@@ -1,4 +1,4 @@
-package br.com.leeches.extension
+package com.github.danilopaiva.extension
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.JsonNode

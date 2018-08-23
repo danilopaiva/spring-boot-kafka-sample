@@ -1,4 +1,4 @@
-package br.com.leeches.config
+package com.github.danilopaiva.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import

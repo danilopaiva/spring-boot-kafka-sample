@@ -1,11 +1,11 @@
-package br.com.leeches
+package com.github.danilopaiva
 
-import br.com.leeches.config.ApplicationConfig
+import com.github.danilopaiva.config.ApplicationConfig
 import org.apache.logging.log4j.LogManager
 import org.springframework.boot.SpringApplication
 import java.net.InetAddress
 
-private val logger = LogManager.getLogger("br.com.leeches.Application")
+private val logger = LogManager.getLogger("com.github.danilopaiva.Application")
 
 fun main(args: Array<String>) {
     val app = SpringApplication.run(ApplicationConfig::class.java, *args)
@@ -15,11 +15,13 @@ fun main(args: Array<String>) {
     val port = app.environment.getProperty("server.port")
     val hostAddress = InetAddress.getLocalHost().hostAddress
 
-    logger.info("""|
+    logger.info(
+        """|
                    |------------------------------------------------------------
                    |Application '$applicationName' is running! Access URLs:
                    |   Local:      http://127.0.0.1:$port$contextPath
                    |   External:   http://$hostAddress:$port$contextPath
-                   |------------------------------------------------------------""".trimMargin())
+                   |------------------------------------------------------------""".trimMargin()
+    )
 
 }
