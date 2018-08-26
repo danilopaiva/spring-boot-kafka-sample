@@ -1,7 +1,7 @@
 package com.github.danilopaiva.helper
 
 import com.github.danilopaiva.command.CreateCustomerAccount
-import com.github.danilopaiva.command.CreateDeposit
+import com.github.danilopaiva.command.RegisterDeposit
 import com.github.danilopaiva.domain.Account
 import com.github.danilopaiva.domain.Deposit
 import com.github.danilopaiva.request.CustomerAccountRequest
@@ -17,7 +17,7 @@ fun CustomerAccountRequest.toCommand() =
     )
 
 fun DepositRequest.toCommand() =
-    CreateDeposit(
+    RegisterDeposit(
         accountId = Account.Id(this.accountId!!),
         amount = Deposit.Amount(this.amount!!)
     )

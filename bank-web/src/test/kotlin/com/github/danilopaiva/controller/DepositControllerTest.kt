@@ -17,7 +17,7 @@ import kotlin.test.assertNotNull
 class DepositControllerTest : ControllerBaseTest() {
 
     @Test
-    fun `should do a deposit`() {
+    fun `should register a deposit`() {
         val accountId = createAccountCustomer()
         val deposit = createADeposit(accountId)
 
@@ -33,7 +33,7 @@ class DepositControllerTest : ControllerBaseTest() {
                     assertNotNull(transactionId)
                     assertNotNull(status)
                     assertNotNull(createdAt)
-                    assertEquals(Deposit.Status.COMPLETED.name, status)
+                    assertEquals(Deposit.Status.PROCESSING.name, status)
                 }
             }
     }

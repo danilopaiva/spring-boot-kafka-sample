@@ -7,7 +7,7 @@ data class CreateCustomerAccount(
     val document: Account.Document
 )
 
-data class CreateDeposit(
+data class RegisterDeposit(
     val accountId: Account.Id,
     val amount: Deposit.Amount
 )

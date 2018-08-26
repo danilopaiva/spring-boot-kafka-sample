@@ -19,7 +19,10 @@ class DepositController constructor(
 ) : DepositApi {
 
     override fun create(@RequestBody @Valid request: DepositRequest): DepositResponse {
-        val command = request.toCommand()
-        return accountCommandHandler.handler(command).toResponse()
+        return request.toCommand()
+            .run { accountCommandHandler.handler(this) }
+            //.apply { depositProducer.send(this) }
+            .run { this.toResponse() }
+
     }
 }

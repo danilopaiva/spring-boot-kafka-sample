@@ -1,7 +1,7 @@
 package com.github.danilopaiva.command.handler
 
 import com.github.danilopaiva.command.CreateCustomerAccount
-import com.github.danilopaiva.command.CreateDeposit
+import com.github.danilopaiva.command.RegisterDeposit
 import com.github.danilopaiva.domain.Account
 import com.github.danilopaiva.domain.Deposit
 import com.github.danilopaiva.domain.repository.AccountRepository
@@ -25,7 +25,7 @@ class AccountCommandHandler {
         return account
     }
 
-    fun handler(command: CreateDeposit): Deposit {
+    fun handler(command: RegisterDeposit): Deposit {
         val account = findAccount(command.accountId)
 
         val deposit = Deposit(
@@ -33,7 +33,7 @@ class AccountCommandHandler {
             amount = command.amount
         )
 
-        account.deposit(deposit, accountRepository)
+        account.registerDeposit(deposit, accountRepository)
 
         return deposit
     }

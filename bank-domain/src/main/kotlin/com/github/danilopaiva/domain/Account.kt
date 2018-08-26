@@ -16,6 +16,10 @@ class Account(
         repository.save(this)
     }
 
+    fun registerDeposit(deposit: Deposit, repository: AccountRepository) {
+        repository.deposit(this, deposit)
+    }
+
     fun deposit(deposit: Deposit, repository: AccountRepository) {
         balance = Balance(balance.value + deposit.amount.value)
         deposit.completedAt = LocalDateTime.now()
