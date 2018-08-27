@@ -1,6 +1,7 @@
 package com.github.danilopaiva.command.handler
 
 import com.github.danilopaiva.command.CreateCustomerAccount
+import com.github.danilopaiva.command.DoDeposit
 import com.github.danilopaiva.command.RegisterDeposit
 import com.github.danilopaiva.domain.Account
 import com.github.danilopaiva.domain.Deposit
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class AccountCommandHandler {
-
-    private val accountRepository: AccountRepository = MockAccountRepository()
+class AccountCommandHandler(private val accountRepository: AccountRepository = MockAccountRepository()) {
 
     fun handler(command: CreateCustomerAccount): Account {
         val account = Account(
@@ -30,12 +29,19 @@ class AccountCommandHandler {
 
         val deposit = Deposit(
             id = Deposit.Id(),
+            accountId = account.id,
             amount = command.amount
         )
 
         account.registerDeposit(deposit, accountRepository)
 
         return deposit
+    }
+
+    fun handler(command: DoDeposit): Deposit {
+        val account = findAccount(command.deposit.accountId)
+
+        return account.doDeposit(command.deposit, accountRepository)
     }
 
     private fun findAccount(accountId: Account.Id) =

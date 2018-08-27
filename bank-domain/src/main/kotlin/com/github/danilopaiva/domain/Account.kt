@@ -10,7 +10,7 @@ class Account(
     val document: Document,
     val status: Status = Status.ACTIVE,
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    val deposits: ArrayList<Deposit> = arrayListOf()
+    val deposits: MutableMap<Deposit.Id, Deposit> = mutableMapOf()
 ) {
     fun create(repository: AccountRepository) {
         repository.save(this)
@@ -20,11 +20,12 @@ class Account(
         repository.deposit(this, deposit)
     }
 
-    fun deposit(deposit: Deposit, repository: AccountRepository) {
+    fun doDeposit(deposit: Deposit, repository: AccountRepository): Deposit {
         balance = Balance(balance.value + deposit.amount.value)
         deposit.completedAt = LocalDateTime.now()
         deposit.status = Deposit.Status.COMPLETED
         repository.deposit(this, deposit)
+        return deposit
     }
 
     data class Balance(val value: Double) {

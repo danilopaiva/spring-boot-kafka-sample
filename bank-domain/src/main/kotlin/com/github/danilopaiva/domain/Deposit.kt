@@ -5,6 +5,7 @@ import java.util.*
 
 data class Deposit(
     val id: Id = Id(),
+    val accountId: Account.Id,
     val amount: Amount,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     var status: Status = Status.PROCESSING,

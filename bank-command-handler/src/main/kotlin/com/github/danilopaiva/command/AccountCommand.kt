@@ -11,3 +11,5 @@ data class RegisterDeposit(
     val accountId: Account.Id,
     val amount: Deposit.Amount
 )
+
+data class DoDeposit(val deposit: Deposit)

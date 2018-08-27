@@ -2,10 +2,18 @@
 :example-caption!:
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 5
+:toclevels: 2
 
 //include::introduction.adoc[]
 
 == Account
 
 include::{snippets}/customer-account-controller-test/should create a customer account/auto-section.adoc[]
+
+include::{snippets}/customer-account-controller-test/should find an account/auto-section.adoc[]
+
+== Deposit
+
+include::{snippets}/deposit-controller-test/should register a deposit/auto-section.adoc[]
+
+include::{snippets}/deposit-controller-test/should find a deposit/auto-section.adoc[]

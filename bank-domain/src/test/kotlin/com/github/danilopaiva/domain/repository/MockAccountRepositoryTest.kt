@@ -1,10 +1,10 @@
 package com.github.danilopaiva.domain.repository
 
-import com.github.danilopaiva.domain.config.BaseTest
+import com.github.danilopaiva.domain.config.DomainBaseTest
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class MockAccountRepositoryTest : BaseTest() {
+class MockAccountRepositoryTest : DomainBaseTest() {
 
     private val accountRepository: AccountRepository =
         MockAccountRepository()

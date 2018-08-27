@@ -10,4 +10,6 @@ interface AccountRepository {
     fun deposit(account: Account, deposit: Deposit): Account
 
     fun find(accountId: Account.Id): Account
+
+    fun findDeposit(depositId: Deposit.Id, accountId: Account.Id): Deposit
 }
